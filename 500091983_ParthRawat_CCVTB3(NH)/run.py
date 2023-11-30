@@ -1,4 +1,4 @@
-import lexical as le
+import basic as ba
 
 # Specify the file path
 file_path = "LEXSAMPLE.txt"
@@ -18,7 +18,7 @@ try:
     for text in lines:
         print(text)
 
-        result, error = le.run('<stdin>', text)
+        result, error = ba.run('<stdin>', text)
 
         if error:
             print(error.as_string())
