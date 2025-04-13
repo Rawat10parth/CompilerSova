@@ -1,5 +1,3 @@
-import self
-
 from errorpos import *
 
 
@@ -644,13 +642,13 @@ def run(file_name, text):
     lexer = Lexical_Analyser(file_name, text)
     tokens, error = lexer.token_generator
     if error:
-        return None, error
+        return None, error  # tokens
 
     # Generate AST
     parser = Parser(tokens)
     ast = parser.parse()
     if ast.error:
-        return None, ast.error
+        return None, ast.error  # ast.node
 
     interpreter = Interpreter()
     context = Context('<program>')
@@ -729,3 +727,32 @@ LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 # KEYWORDS
 KEYWORDS = ['VAR', 'AND', 'OR', 'NOT', 'IF', 'ELSE', 'ELIF', 'WHILE', 'FOR', 'FUNCTION', 'RETURN', 'DEF', 'PRINT',
             'var', 'and', 'or', 'not', 'if', 'else', 'elif', 'while', 'for', 'function', 'return', 'def', 'print']
+
+file_path = "LEXSAMPLE.txt"
+
+# Initialize an empty list to store the lines from the file
+lines = []
+
+try:
+    # Open the file in read mode
+    with open(file_path, 'r') as file:
+        # Iterate through each line in the file
+        for line in file:
+            # Append the line to the list, removing the newline character
+            lines.append(line.strip())
+
+    # Print the lines or perform any further processing
+    for text in lines:
+        print(text)
+
+        result, error = run('<stdin>', text)
+
+        if error:
+            print(error.as_string())
+        else:
+            print(result)
+
+except FileNotFoundError:
+    print(f"File '{file_path}' not found.")
+except Exception as e:
+    print(f"An error occurred: {str(e)}")
